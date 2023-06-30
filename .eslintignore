@@ -1,0 +1,10 @@
+dist
+coverage
+docs
+vendor
+routes
+md
+img
+public/test
+public/vendor
+public/resources
