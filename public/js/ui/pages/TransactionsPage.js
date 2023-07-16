@@ -156,7 +156,7 @@ class TransactionsPage {
                 </div>
                 <div class="transaction__info">
                     <h4 class="transaction__title">${item.name}</h4>
-                    <div class="transaction__date">${this.formatDate()}</div>
+                    <div class="transaction__date">${this.formatDate(item.created_at)}</div>
                 </div>
               </div>
               <div class="col-md-3">
