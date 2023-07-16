@@ -29,10 +29,8 @@ class UserWidget {
   update() {
     const currentUser = User.current();
     if (currentUser) {
-      const nameDiv = document.querySelector('.user-name');
+      const nameDiv = this.element.querySelector('.user-name');
       nameDiv.innerHTML = currentUser.name;
-    } else {
-      throw new Error();
     }
   }
 }

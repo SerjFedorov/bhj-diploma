@@ -108,7 +108,7 @@ class User {
           this.unsetCurrent();
           console.log('Вышли');
         }
-        // callback(err, response);
+        callback(err, response);
       },
     });
   }

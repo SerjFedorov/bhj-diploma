@@ -11,10 +11,10 @@ class RegisterForm extends AsyncForm {
    * */
   onSubmit(data) {
     User.register(data, (err, response) => {
-      if (response && response.user) {
+      if (response && response.success) {
         this.element.reset();
-        App.setState('user-logged');
         App.getModal('register').close();
+        App.setState('user-logged');
       } else {
         console.log(err);
         console.log('Неверный Логин или Пароль');

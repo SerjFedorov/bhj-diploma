@@ -32,15 +32,12 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
-    const removeAcc = document.querySelector('.remove-account');
+    const removeAcc = this.element.querySelector('.remove-account');
     removeAcc.addEventListener('click', () => {
-        this.removeAccount();
-          console.log();
-          console.log(' удалить счет');
-      }
-    );
+      this.removeAccount();
+      console.log(' удалить счет');
+    });
 
-      
     this.element.addEventListener('click', (e) => {
       if (e.target.closest('.transaction__remove')) {
         this.removeTransaction(e.target.closest('.transaction__remove').dataset);
@@ -59,16 +56,19 @@ class TransactionsPage {
    * для обновления приложения
    * */
   removeAccount() {
+    if (!this.lastOptions) {
+      return;
+    }
+    const id = this.lastOptions.account_id;
     if (!confirm('Вы действительно хотите удалить счёт?')) {
       return;
     }
-    Account.remove(this.lastOptions, (err, response) => {
-      if (!response) {
-        return;
+    Account.remove({ id }, (err, response) => {
+      if (response && response.success) {
+        App.updateWidgets();
+        App.updateForms();
+        this.clear();
       }
-      App.updateWidgets();
-      App.updateForms();
-      this.clear();
     });
   }
 
@@ -86,9 +86,7 @@ class TransactionsPage {
       if (!response) {
         return;
       }
-      
       App.update();
-      this.clear();
     });
   }
 
@@ -158,7 +156,7 @@ class TransactionsPage {
                 </div>
                 <div class="transaction__info">
                     <h4 class="transaction__title">${item.name}</h4>
-                    <div class="transaction__date">${this.formatDate(item.created_at)}</div>
+                    <div class="transaction__date">${this.formatDate()}</div>
                 </div>
               </div>
               <div class="col-md-3">
@@ -180,8 +178,7 @@ class TransactionsPage {
    * */
   renderTransactions(data) {
     const content = this.element.querySelector('.content');
-
-    content.innerHTML = '';
-    data.forEach((item) => content.insertAdjacentHTML('afterbegin', this.getTransactionHTML(item)));
+    content.innerHTML = data.reduce((acc, item) => acc + this.getTransactionHTML(item), '');
   }
 }
+// аналогия renderAccountlist
